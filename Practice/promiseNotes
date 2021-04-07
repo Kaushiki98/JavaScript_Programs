@@ -1,0 +1,206 @@
+/*promise is a good way to handle asynchronous operations.
+It is used to find out if the asynchronous operation is successfully completed or not.
+A promise may have one of three states.
+Pending
+Fulfilled
+Rejected
+A promise starts in a pending state. 
+That means the process is not complete. 
+If the operation is successful, the process ends in a fulfilled state.
+And, if an error occurs, the process ends in a rejected state.
+*/
+
+/*The Promise() constructor takes a function as an argument. 
+The function also accepts two functions resolve() and reject().
+If the promise returns successfully, the resolve() function is called. 
+And, if an error occurs, the reject() function is called.
+*/
+
+const count = true;
+let countval = Promise(function(resolve, reject){
+  if(count == true){
+    resolve('success')
+  }else{
+    reject('incomplete')
+  }
+});
+console.log(countval);
+
+/*
+Promises are useful when you have to handle more than one asynchronous task, one after another. 
+For that, we use promise chaining.
+You can perform an operation after a promise is resolved using methods then(), catch() and finally()
+then() method is used with the callback when the promise is successfully fulfilled or resolved.
+
+promiseObject.then(onFulfilled, onRejected);
+*/
+
+// returns a promise
+
+let countValue = new Promise(function (resolve, reject) {
+  resolve("Promise resolved");
+});
+
+// executes when promise is resolved successfully
+
+countValue
+  .then(function successValue(result) {
+    console.log(result);
+  })
+
+  .then(function successValue1() {
+    console.log("You can call multiple functions this way.");
+  });
+
+/*
+then() method is used to chain the functions to the promise. 
+The then() method is called when the promise is resolved successfully.
+You can chain multiple then() methods with the promise.
+*/
+
+// catch() method is used with the callback when the promise is rejected or if an error occurs.
+
+// returns a promise
+let countValue = new Promise(function (resolve, reject) {
+   reject('Promise rejected'); 
+});
+
+// executes when promise is resolved successfully
+countValue.then(
+    function successValue(result) {
+        console.log(result);
+    },
+ )
+
+// executes if there is an error
+.catch(
+    function errorValue(result) {
+        console.log(result);
+    }
+);
+
+/*
+JavaScript Promise:-
+The syntax is user-friendly and easy to read.
+Error handling is easier to manage.
+*/
+
+api().then(function(result) {
+    return api2() ;
+}).then(function(result2) {
+    return api3();
+}).then(function(result3) {
+    // do work
+}).catch(function(error) {
+    //handle any error that may occur before this point 
+});
+
+/*
+JavaScript Callback:-
+The syntax is difficult to understand.
+Error handling may be hard to manage.
+*/
+
+api(function(result){
+    api2(function(result2){
+        api3(function(result3){
+             // do work
+            if(error) {
+                // do something
+            }
+            else {
+                // do something
+            }
+        });
+    });
+});
+
+/*
+JavaScript finally() method:-
+You can also use the finally() method with promises. 
+The finally() method gets executed when the promise is either resolved successfully or rejected.
+*/
+
+// returns a promise
+let countValue = new Promise(function (resolve, reject) {
+    // could be resolved or rejected   
+    resolve('Promise resolved'); 
+});
+
+// add other blocks of code
+countValue.finally(
+    function greet() {
+        console.log('This code is executed.');
+    }
+);
+
+//result success or not using promises
+
+ let p = new Promise((resolve, reject) => {
+   let a =3+3
+   if(a=== 6){
+      resolve('success')
+   }else {
+     reject('fail')
+   }
+ })
+ p.then((message) => {
+   console.log('this is the'+ message)
+ }).catch((message) =>{
+   console.log('in catch'+message)
+ })
+
+//using callback
+
+const userLeft = false
+const userWatching = true
+
+function watchingcallback(callback, errorCallback) {
+  if(userLeft){
+    errorCallback ({
+       name : 'user left',
+       message : ':('
+    })
+  }
+     else if (userWatching){
+       errorCallback({
+         name:'user watching',
+         message: 'webpageSimplified<cat'
+       })
+     }else{
+       callback('like')
+     }
+  }
+  watchingcallback((message) => {
+    console.log('success '+message)
+    }, (error) =>{
+      console.log(error.name + ' ' +error.message)
+    })
+
+// using promises
+
+function watchingPromise() {
+  return new Promise((resolve, reject) => {
+    if(userLeft){
+      reject ({
+         name : 'user left',
+         message : ':('
+      })
+    }
+      else if (userWatching){
+        reject({
+          name:'user watching',
+          message: 'webpageSimplified<cat'
+        })
+      } else {
+        resolve('like')
+      }
+    })
+  }
+  watchingPromise().then((message) => {
+    console.log('success '+message)
+  }).catch((error) =>{
+    console.log(error.name + ' ' +error.message)
+  })
+
+
